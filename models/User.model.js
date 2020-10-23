@@ -76,5 +76,4 @@ userSchema.virtual("lists", {
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
-
-//nota//
+//prueba prueba prueba//
