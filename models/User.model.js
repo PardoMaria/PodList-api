@@ -59,21 +59,19 @@ userSchema.methods.checkPassword = function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.virtual("podcasts", {
-  ref: 'podcast',
-  localField: '_id',
+userSchema.virtual("likes", {
+  ref: 'Like',
+  localField: 'id',
   foreignField: 'user',
-  justOne: false,
 });
 
+
 userSchema.virtual("lists", {
-  ref: 'list',
-  localField: '_id',
+  ref: 'List',
+  localField: 'id',
   foreignField: 'user',
-  justOne: false,
 });
 
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
-//prueba prueba prueba//

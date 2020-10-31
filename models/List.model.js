@@ -30,9 +30,9 @@ const listSchema = new mongoose.Schema(
   }
 );
 
-productSchema.virtual("podcasts", {
+listSchema.virtual("podcasts", {
   ref: "Podcast",
-  localField: "_id",
+  localField: "id",
   foreignField: "list",
 });
 

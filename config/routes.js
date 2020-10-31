@@ -3,8 +3,7 @@ const router = express.Router()
 const authMiddleware = require("../middlewares/auth.middleware")
 const baseController = require("../controllers/base.controller")
 const userController = require("../controllers/user.controller")
-const productController = require("../controllers/product.controller")
-const reviewController = require("../controllers/review.controller")
+const podcastController = require("../controllers/podcast.controller")
 
 module.exports = router
 
@@ -16,30 +15,14 @@ router.get("/logout", authMiddleware.isAuthenticated, userController.logout)
 
 // Users
 router.get("/user/:id", authMiddleware.isAuthenticated, userController.profile)
+// router.post('/user/new', authMiddleware.isNotAuthenticated,userController.createUser);
 
-// Products
-router.get("/product", authMiddleware.isAuthenticated, productController.list)
 
-router.post(
-  "/product",
-  authMiddleware.isAuthenticated,
-  productController.create
-)
+// Podcasts
+router.post("/podcast/:likeId/add", podcastController.addToFav)
+router.get("/podcast/:search", podcastController.getPodcastsFromSpotify)
+router.get("/myfavs", authMiddleware.isAuthenticated, podcastController.getLikes);
+// router.get('/podcast/:id', authMiddleware.isAuthenticated, podcastController.single)
+router.delete("/podcast/:id", authMiddleware.isAuthenticated, podcastController.delete)
 
-router.get('/product/:id', authMiddleware.isAuthenticated, productController.single)
 
-router.patch(
-  "/product/:id/edit",
-  authMiddleware.isAuthenticated,
-  productController.edit
-)
-
-router.delete(
-  "/product/:id",
-  authMiddleware.isAuthenticated,
-  productController.delete
-)
-
-// Reviews
-router.post("/product/:id/review", authMiddleware.isAuthenticated, reviewController.createReview)
-router.delete("/review/:id", authMiddleware.isAuthenticated, reviewController.deleteReview)

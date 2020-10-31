@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const User = require("./User.model");
-const List = require("./List.model");
+// const List = require("./List.model");
 
 const podcastSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Title is required"],
+      required: [true, "Name is required"],
     },
     description: {
       type: String,
@@ -15,16 +15,16 @@ const podcastSchema = new mongoose.Schema(
     total_episodes: {
       type: Number,
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    list: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "List",
-    },
+    // user: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: "User",
+    // },
+    // list: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: "List",
+    // },
   },
   {
     timestamps: true,
