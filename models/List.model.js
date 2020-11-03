@@ -13,6 +13,10 @@ const listSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    podcasts: {
+      type: [Object],
+      default: [],
+    },
   },
   {
     timestamps: true,
@@ -30,11 +34,6 @@ const listSchema = new mongoose.Schema(
   }
 );
 
-listSchema.virtual("podcasts", {
-  ref: "Podcast",
-  localField: "id",
-  foreignField: "list",
-});
 
 const List = mongoose.model("List", listSchema);
 

@@ -1,5 +1,5 @@
 const Podcast = require("../models/Podcast.model")
-// const List = require("../models/List.model")
+const List = require("../models/List.model")
 const createError = require("http-errors")
 const SpotifyWebApi = require('spotify-web-api-node')
 const axios = require('axios')
@@ -32,7 +32,12 @@ module.exports.getPodcastsFromSpotify = (req, res, next) => {
       }
     })
     .then(podcast => {
-      res.json(podcast.data.shows.items)
+      List.find({
+        user:req.currentUser.id
+      })
+      .then(lists => {
+        res.json({lists, podcasts: podcast.data.shows.items})
+      })
     })
     .catch(next)
 }
@@ -48,12 +53,12 @@ module.exports.getLikes = (req, res, next) => {
 }
 
 module.exports.addToFav = (req, res, next) => {
-  console.log('HOLAAAAAAAAAAAA',req.params.likeId)
 
   const params = {
     podcastId: req.params.likeId,
     user: req.currentUser.id,
-    podcast: req.body
+    podcast: req.body,
+    // category: req.params.category,
   }
 
   Like.findOne(params)
@@ -80,19 +85,6 @@ module.exports.addToFav = (req, res, next) => {
     .catch(next)
 }
 
-
-module.exports.create = (req, res, next) => {
-  const podcast = new Podcast({
-    user: req.session.user.id,
-    name: req.body.name,
-    description: req.body.description,
-    total_episodes: req.body.total_episodes,
-  })
-
-  podcast.save()
-    .then(podcast => res.status(201).json(podcast))
-    .catch(next)
-}
 
 // module.exports.edit = (req, res, next) => {
 //   const body = req.body

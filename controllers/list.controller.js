@@ -1,25 +1,89 @@
-const Podcast = require("../models/Podcast.model")
 const List = require("../models/List.model")
 const createError = require("http-errors")
 
-module.exports.createList = (req, res, next) => {
-  Product.findById(req.params.id)
-    .then((p) => {
-      if (p.user === req.currentUser.id) {
-        throw createError(403, "You cannot leave reviews for your own product")
+
+module.exports.create = (req, res, next) => {
+  const list = new List({
+    user: req.session.user.id,
+    name: req.body.name,
+  })
+
+  list.save()
+    .then(list => res.status(201).json(list))
+    .catch(next)
+}
+
+// module.exports.addToList = (req, res, next) => {
+//   List.findById(req.params.id)
+//     .then((l) => {
+//       //TODO: devolver 404 si la lista no existe OK HECHO
+//       //TODO: comprobar que si el podcast ya esta en la lista y que no se añada NO HECHO
+//       l.podcasts.push(req.body)
+//       return l.save()
+//         .then(() => {
+//           res.json()
+//         })
+//     })
+//     .catch(next)
+// }
+
+module.exports.addToList = (req, res, next) => {
+  List.findById(req.params.id)
+    .then((l) => {
+      if (!l) {
+        throw createError(404, 'list not found')
       } else {
-        const review = new Review({
-          ...req.body,
-          user: req.currentUser.id,
-          product: p.id,
+        console.log(req.body.name);
+        const existingPodcast = l.podcasts.find(p => {
+          console.log(p.name);
+          return p.name === req.body.name;
         })
-        return review.save().then((r) => {
-          res.json(r)
-        })
+        console.log(existingPodcast)
+        if (existingPodcast) {
+          res.json()
+        } else {
+          l.podcasts.push(req.body)
+          return l.save()
+            .then(() => {
+              res.json()
+            })
+        }
       }
     })
-    .catch((e) => next(e))
 }
+
+
+module.exports.editList = (req, res, next) => {
+  const body = req.body
+
+  List.findOneAndUpdate({
+      _id: req.params.id
+    }, body, {
+      runValidators: true,
+      new: true
+    })
+    .then(list => {
+      res.status(201).json(list)
+    })
+    .catch(next)
+}
+
+module.exports.showLists = (req, res, next) => {
+  List.find({
+      user: req.currentUser.id
+    })
+    .then((lists) => {
+      res.json(lists)
+    })
+}
+
+module.exports.showOneList = (req, res, next) => {
+  List.findById(req.params.id)
+    .then((list) => {
+      res.json(list)
+    })
+}
+
 
 module.exports.deleteList = (req, res, next) => {
   List.findById(req.params.id)

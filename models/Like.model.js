@@ -13,7 +13,12 @@ const likeSchema = new mongoose.Schema({
         type: Object,
         default: {},
         required: true
-    }
+    },
+    // category: {
+    //     type: String,
+    //     enum: ["Escuchando", "Pendiente", "Favoritos"],
+    //     required: true
+    // },
 }, {
     timestamps: true,
     toJSON: {

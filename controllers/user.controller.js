@@ -1,7 +1,7 @@
 const createError = require("http-errors")
 const User = require("../models/User.model")
-const Podcast = require("../models/Podcast.model")
 const List = require("../models/List.model")
+const Like = require("../models/Like.model")
 
 
 module.exports.login = (req, res, next) => {
@@ -35,6 +35,8 @@ module.exports.logout = (req, res, next) => {
   res.status(204).json()
 }
 
+//ESTOS DOS NO LOS ESTAS USANDO AUN
+
 module.exports.profile = (req, res, next) => {
   User.findById(req.params.id)
     .populate("podcasts")
@@ -53,7 +55,7 @@ module.exports.profile = (req, res, next) => {
 
 module.exports.delete = (req, res, next) => {
   User.findByIdAndRemove(req.params.id)
-    .then(() => Podcast.remove({user: req.params.id}))
+    .then(() => Like.remove({user: req.params.id}))
     .then(() => List.remove({user: req.params.id}))
     .then(() => req.session.destroy())
     .then(next)

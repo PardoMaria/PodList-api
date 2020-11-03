@@ -4,6 +4,8 @@ const authMiddleware = require("../middlewares/auth.middleware")
 const baseController = require("../controllers/base.controller")
 const userController = require("../controllers/user.controller")
 const podcastController = require("../controllers/podcast.controller")
+const listController = require("../controllers/list.controller")
+
 
 module.exports = router
 
@@ -19,10 +21,16 @@ router.get("/user/:id", authMiddleware.isAuthenticated, userController.profile)
 
 
 // Podcasts
-router.post("/podcast/:likeId/add", podcastController.addToFav)
+router.post("/list/:id/add", listController.addToList)
 router.get("/podcast/:search", podcastController.getPodcastsFromSpotify)
-router.get("/myfavs", authMiddleware.isAuthenticated, podcastController.getLikes);
-// router.get('/podcast/:id', authMiddleware.isAuthenticated, podcastController.single)
-router.delete("/podcast/:id", authMiddleware.isAuthenticated, podcastController.delete)
+router.get("/lists", authMiddleware.isAuthenticated, listController.showLists);
+router.get('/lists/:id', authMiddleware.isAuthenticated, listController.showOneList);
+router.patch("/list/:id", authMiddleware.isAuthenticated, listController.editList)
+
+//Lists
+router.post('/list/new', authMiddleware.isAuthenticated, listController.create)
+
+//TODO: 1. FORMULARIO LISTA A CREAR Y EDITAR(mismo componente)
+//2. TODO VISTA DE LISTAS hecho!!!!!!, VISTA DE LISTA
 
 
