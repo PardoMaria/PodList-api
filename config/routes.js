@@ -25,12 +25,11 @@ router.post("/list/:id/add", listController.addToList)
 router.get("/podcast/:search", podcastController.getPodcastsFromSpotify)
 router.get("/lists", authMiddleware.isAuthenticated, listController.showLists);
 router.get('/lists/:id', authMiddleware.isAuthenticated, listController.showOneList);
-router.patch("/list/:id", authMiddleware.isAuthenticated, listController.editList)
+router.patch("/lists/:id", authMiddleware.isAuthenticated, listController.editList)
 
 //Lists
 router.post('/list/new', authMiddleware.isAuthenticated, listController.create)
 
 //TODO: 1. FORMULARIO LISTA A CREAR Y EDITAR(mismo componente)
-//2. TODO VISTA DE LISTAS hecho!!!!!!, VISTA DE LISTA
 
 

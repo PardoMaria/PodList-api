@@ -16,8 +16,6 @@ module.exports.create = (req, res, next) => {
 // module.exports.addToList = (req, res, next) => {
 //   List.findById(req.params.id)
 //     .then((l) => {
-//       //TODO: devolver 404 si la lista no existe OK HECHO
-//       //TODO: comprobar que si el podcast ya esta en la lista y que no se añada NO HECHO
 //       l.podcasts.push(req.body)
 //       return l.save()
 //         .then(() => {
