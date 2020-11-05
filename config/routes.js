@@ -17,6 +17,7 @@ router.get("/logout", authMiddleware.isAuthenticated, userController.logout)
 
 // Users
 router.get("/user/:id", authMiddleware.isAuthenticated, userController.profile)
+// router.patch('/users/:id/', authMiddleware.isAuthenticated, userController.editUser);
 // router.post('/user/new', authMiddleware.isNotAuthenticated,userController.createUser);
 
 
@@ -30,6 +31,6 @@ router.patch("/lists/:id", authMiddleware.isAuthenticated, listController.editLi
 //Lists
 router.post('/list/new', authMiddleware.isAuthenticated, listController.create)
 
-//TODO: 1. FORMULARIO LISTA A CREAR Y EDITAR(mismo componente)
+
 
 

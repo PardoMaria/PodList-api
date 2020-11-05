@@ -35,6 +35,21 @@ module.exports.logout = (req, res, next) => {
   res.status(204).json()
 }
 
+// module.exports.editUser = (req, res, next) => {
+//   const body = req.body
+
+//   User.findOneAndUpdate({
+//       _id: req.params.id
+//     }, body, {
+//       runValidators: true,
+//       new: true
+//     })
+//     .then(user => {
+//       res.status(201).json(user)
+//     })
+//     .catch(next)
+// }
+
 //ESTOS DOS NO LOS ESTAS USANDO AUN
 
 module.exports.profile = (req, res, next) => {
